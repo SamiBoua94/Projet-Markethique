@@ -14,6 +14,107 @@
     gap: var(--spacing-md);
 }
 
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.lang-selector {
+    position: relative;
+    margin-right: 20px;
+}
+
+.lang-btn {
+    display: flex;
+    align-items: center;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    padding: 2px 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 11px;
+    line-height: 1;
+    height: 22px;
+    color: #ffffff;
+}
+
+.lang-btn:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.lang-flag {
+    margin-right: 4px;
+    font-size: 16px;
+    line-height: 1;
+}
+
+.lang-text {
+    margin-right: 4px;
+    font-weight: 500;
+    font-size: 11px;
+    color: #ffffff;
+}
+
+.lang-arrow {
+    width: 10px;
+    height: 10px;
+    transition: transform 0.2s ease;
+    margin-left: 2px;
+}
+
+.rotate-180 {
+    transform: rotate(180deg);
+}
+
+.lang-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    min-width: 100px;
+    margin-top: 4px;
+    overflow: hidden;
+    padding: 4px 0;
+}
+
+.lang-option {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 6px 12px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background-color 0.2s ease;
+    line-height: 1.2;
+}
+
+.lang-option .lang-flag {
+    margin-right: 8px;
+    font-size: 14px;
+}
+
+.lang-option:hover {
+    background-color: #f6f8fa;
+}
+
+.lang-option.active {
+    background-color: #f0f4f8;
+    font-weight: 500;
+}
+
+.lang-option .lang-flag {
+    font-size: 1.1em;
+}
+
 .header-logo {
     display: flex;
     align-items: center;
@@ -30,8 +131,8 @@
 }
 
 .header-logo-img {
-    width: 35px;
-    height: 35px;
+    width: 48px;
+    height: 48px;
     object-fit: contain;
     border-radius: var(--radius-sm);
     background: var(--white);
@@ -39,9 +140,10 @@
 }
 
 .header-brand {
-    font-size: var(--font-size-lg);
-    font-weight: 700;
+    font-size: 1.8rem;
+    font-weight: 800;
     color: var(--white);
+    letter-spacing: 0.03em;
 }
 
 .header-search {
@@ -85,6 +187,38 @@
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
+}
+
+/* Bouton menu mobile (caché en desktop, stylé ici) */
+.header-mobile-toggle {
+    display: none; /* affiché uniquement dans le @media mobile */
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    color: #ffffff;
+    gap: 6px;
+}
+
+.mobile-toggle-lines {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.mobile-toggle-line {
+    width: 16px;
+    height: 2px;
+    background: #ffffff;
+    border-radius: 999px;
+    margin: 2px 0;
+}
+
+.mobile-toggle-label {
+    margin-left: 6px;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .header-btn-wrapper {
@@ -278,38 +412,50 @@
     color: var(--primary);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
     .header-container {
-        flex-wrap: wrap;
+        padding: var(--spacing-xs) var(--spacing-md);
         gap: var(--spacing-sm);
     }
 
-    .header-search {
-        order: 3;
-        width: 100%;
-        max-width: 100%;
+    /* Header sur deux colonnes : gauche (lang + logo), droite (menu) */
+    .header {
+        position: sticky;
+        top: 0;
+    }
+
+    .header-left {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .header-logo-img {
+        width: 40px;
+        height: 40px;
     }
 
     .header-brand {
-        font-size: var(--font-size-base);
+        font-size: 1.4rem;
     }
 
-    .nav-container {
-        overflow-x: auto;
-        gap: var(--spacing-sm);
-        -webkit-overflow-scrolling: touch;
+    /* Cacher la recherche et les actions desktop, afficher le bouton menu */
+    .header-search {
+        display: none;
     }
 
-    .nav-btn {
-        font-size: var(--font-size-xs);
+    .header-actions {
+        display: none;
     }
 
-    .nav-dropdown,
-    .header-dropdown {
-        position: fixed;
-        left: 0;
-        right: 0;
-        top: auto;
-        transform: translateY(0);
+    .nav-bar {
+        display: none;
+    }
+
+    .header-mobile-toggle {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: auto;
     }
 }

@@ -4,6 +4,25 @@ import { categories } from '../data/products';
 
 const Header = ({ cartCount, onSearchChange, selectedCategory, onCategoryChange }) => {
     const [searchQuery, setSearchQuery] = useState('');
+    const [showLangMenu, setShowLangMenu] = useState(false);
+    const [currentLang, setCurrentLang] = useState('EN');
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const languages = [
+        { code: 'EN', flag: '🇬🇧' },
+        { code: 'FR', flag: '🇫🇷' }
+    ];
+
+    const toggleLangMenu = () => {
+        setShowLangMenu(!showLangMenu);
+    };
+
+    const changeLanguage = (lang) => {
+        setCurrentLang(lang);
+        setShowLangMenu(false);
+    };
+
+    const currentLangData = languages.find(lang => lang.code === currentLang) || languages[0];
 
     const handleSearch = (e) => {
         const value = e.target.value;
@@ -19,9 +38,54 @@ const Header = ({ cartCount, onSearchChange, selectedCategory, onCategoryChange 
         <>
             <header className="header">
                 <div className="header-container container">
-                    <div className="header-logo">
-                        <img src="/logo.jpg" alt="Markethique Logo" className="header-logo-img" />
-                        <span className="header-brand">Markethique</span>
+                    <div className="header-left">
+                        <div className="lang-selector">
+                            <button 
+                                className="lang-btn" 
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    setShowLangMenu(!showLangMenu);
+                                }}
+                            >
+                                <span className="lang-flag">🌐</span>
+                                <span className="lang-text">{currentLang}</span>
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={`lang-arrow ${showLangMenu ? 'rotate-180' : ''}`}>
+                                    <path d="M6 9l6 6 6-6" />
+                                </svg>
+                            </button>
+                            {showLangMenu && (
+                                <div className="lang-menu">
+                                    <button 
+                                        className={`lang-option ${currentLang === 'FR' ? 'active' : ''}`}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setCurrentLang('FR');
+                                            setShowLangMenu(false);
+                                            // Ici vous pouvez ajouter la logique pour changer la langue de l'application
+                                        }}
+                                    >
+                                        <span className="lang-flag">🇫🇷</span>
+                                        <span>Français</span>
+                                    </button>
+                                    <button 
+                                        className={`lang-option ${currentLang === 'EN' ? 'active' : ''}`}
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setCurrentLang('EN');
+                                            setShowLangMenu(false);
+                                            // Ici vous pouvez ajouter la logique pour changer la langue de l'application
+                                        }}
+                                    >
+                                        <span className="lang-flag">🇬🇧</span>
+                                        <span>English</span>
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+                        <div className="header-logo">
+                            <img src="/logo.jpg" alt="Markethique Logo" className="header-logo-img" />
+                            <span className="header-brand">Markethique</span>
+                        </div>
                     </div>
 
                     <form className="header-search" onSubmit={handleSubmit}>
@@ -38,6 +102,17 @@ const Header = ({ cartCount, onSearchChange, selectedCategory, onCategoryChange 
                             </svg>
                         </button>
                     </form>
+
+                    <button
+                        className="header-mobile-toggle"
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                    >
+                        <span className="mobile-toggle-lines">
+                            <span className="mobile-toggle-line" />
+                            <span className="mobile-toggle-line" />
+                            <span className="mobile-toggle-line" />
+                        </span>
+                    </button>
 
                     <div className="header-actions">
                         <div className="header-btn-wrapper">

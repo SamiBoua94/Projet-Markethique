@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import ProductGrid from './components/ProductGrid';
+import LoginPage from './pages/LoginPage';
 import { products as initialProducts } from './data/products';
 import './App.css';
 
@@ -58,19 +60,22 @@ function App() {
 
   const totalCartItems = cart.reduce((total, item) => total + item.quantity, 0);
 
-  return (
-    <div className="app">
-      <Header
-        cartCount={totalCartItems}
-        onSearchChange={handleSearchChange}
+  // Fonction pour le layout de la page d'accueil
+  const HomePage = () => (
+    <>
+      <Header 
+        cartCount={cart.length} 
+        onSearchChange={setSearchQuery}
         selectedCategory={selectedCategory}
-        onCategoryChange={handleCategoryChange}
+        onCategoryChange={setSelectedCategory}
       />
       <Hero />
-      <ProductGrid
-        products={filteredProducts}
-        onAddToCart={handleAddToCart}
-      />
+      <main>
+        <ProductGrid 
+          products={filteredProducts} 
+          onAddToCart={handleAddToCart} 
+        />
+      </main>
       <footer className="footer">
         <div className="container">
           <div className="footer-content">
@@ -117,7 +122,19 @@ function App() {
           </div>
         </div>
       </footer>
-    </div>
+    </>
+  );
+
+  return (
+    <Router>
+      <div className="app">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

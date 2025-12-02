@@ -1,37 +1,37 @@
-# Markethique Marketplace
+# Projet Markethique
 
-Un projet de marketplace éthique inspiré par Amazon, développé avec React et Vite.
+Ce dépôt contient le code source du projet Markethique, une marketplace éthique.
 
-## 🚀 Comment lancer le projet
+## Structure du projet
 
-Suivez ces instructions pour installer et lancer le site sur votre machine locale.
+Le projet est divisé en deux parties :
 
-### 1. Prérequis
+- **frontend/** : L'application React (Vite) pour l'interface utilisateur.
+- **backend/** : Le serveur (à venir) pour l'API et la base de données.
 
-Assurez-vous d'avoir **Node.js** installé sur votre ordinateur.
+## Comment lancer le projet
 
-### 2. Installation
+### Frontend
 
-Ouvrez votre terminal, naviguez jusqu'au dossier du projet `projet-market` et installez les dépendances :
+Pour lancer l'application frontend :
 
-```bash
-cd projet-market
-npm install
-```
+1. Allez dans le dossier `frontend` :
+   ```bash
+   cd frontend
+   ```
 
-### 3. Lancer le site
+2. Installez les dépendances (si ce n'est pas déjà fait) :
+   ```bash
+   npm install
+   ```
 
-Une fois l'installation terminée, lancez le serveur de développement :
+3. Lancez le serveur de développement :
+   ```bash
+   npm run dev
+   ```
 
-```bash
-npm run dev
-```
+L'application sera accessible sur **http://localhost:5173/**.
 
-Le site sera accessible à l'adresse indiquée dans votre terminal, généralement :  
-👉 **http://localhost:5173/**
+### Backend
 
-## 🛠️ Technologies utilisées
-
-- **React**
-- **Vite**
-- **CSS Vanilla** (Design System personnalisé)
+*(Instructions à venir lors du développement du backend)*
