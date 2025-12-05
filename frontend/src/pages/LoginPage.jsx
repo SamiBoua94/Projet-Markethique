@@ -5,13 +5,14 @@ import './LoginPage.css';
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [accountType, setAccountType] = useState('client'); // 'client' or 'merchant'
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     try {
       // Simulation de connexion
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -30,7 +31,7 @@ const LoginPage = () => {
             <h1>Connexion à Markethique</h1>
             <p className="welcome-text">Entrez vos identifiants pour accéder à votre espace</p>
           </div>
-          
+
           {error && (
             <div className="flash flash-error">
               <svg className="octicon octicon-alert" viewBox="0 0 16 16" width="16" height="16">
@@ -39,7 +40,36 @@ const LoginPage = () => {
               {error}
             </div>
           )}
-          
+
+          {/* Account Type Selector */}
+          <div className="account-type-selector">
+            <p className="selector-label">Type de compte</p>
+            <div className="account-type-buttons">
+              <button
+                type="button"
+                className={`account-type-btn ${accountType === 'client' ? 'active' : ''}`}
+                onClick={() => setAccountType('client')}
+              >
+                <div className="account-icon">👤</div>
+                <div className="account-info">
+                  <span className="account-title">Client</span>
+                  <span className="account-desc">Acheter des produits</span>
+                </div>
+              </button>
+              <button
+                type="button"
+                className={`account-type-btn ${accountType === 'merchant' ? 'active' : ''}`}
+                onClick={() => setAccountType('merchant')}
+              >
+                <div className="account-icon">🏪</div>
+                <div className="account-info">
+                  <span className="account-title">Commerçant</span>
+                  <span className="account-desc">Vendre des produits</span>
+                </div>
+              </button>
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit} className="auth-form">
             <div className="form-group">
               <label htmlFor="username">Username or email address</label>
@@ -53,7 +83,7 @@ const LoginPage = () => {
                 autoFocus
               />
             </div>
-            
+
             <div className="form-group">
               <label htmlFor="password">Password</label>
               <input
@@ -68,12 +98,12 @@ const LoginPage = () => {
                 <a href="/password_reset" className="forgot-password">Forgot password?</a>
               </div>
             </div>
-            
+
             <button type="submit" className="btn btn-primary btn-block">
-              Sign in
+              {accountType === 'client' ? 'Se connecter' : 'Accéder à mon espace vendeur'}
             </button>
           </form>
-          
+
           <div className="login-footer">
             <p className="create-account-callout">
               New to Markethique? <a href="/signup">Create an account</a>.

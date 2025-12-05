@@ -40,8 +40,8 @@ const Header = ({ cartCount, onSearchChange, selectedCategory, onCategoryChange 
                 <div className="header-container container">
                     <div className="header-left">
                         <div className="lang-selector">
-                            <button 
-                                className="lang-btn" 
+                            <button
+                                className="lang-btn"
                                 onClick={(e) => {
                                     e.preventDefault();
                                     setShowLangMenu(!showLangMenu);
@@ -55,7 +55,7 @@ const Header = ({ cartCount, onSearchChange, selectedCategory, onCategoryChange 
                             </button>
                             {showLangMenu && (
                                 <div className="lang-menu">
-                                    <button 
+                                    <button
                                         className={`lang-option ${currentLang === 'FR' ? 'active' : ''}`}
                                         onClick={(e) => {
                                             e.preventDefault();
@@ -67,7 +67,7 @@ const Header = ({ cartCount, onSearchChange, selectedCategory, onCategoryChange 
                                         <span className="lang-flag">🇫🇷</span>
                                         <span>Français</span>
                                     </button>
-                                    <button 
+                                    <button
                                         className={`lang-option ${currentLang === 'EN' ? 'active' : ''}`}
                                         onClick={(e) => {
                                             e.preventDefault();
