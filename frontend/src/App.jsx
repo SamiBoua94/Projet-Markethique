@@ -4,6 +4,7 @@ import LoginPage from './pages/LoginPage';
 import ClientHomePage from './pages/ClientHomePage.jsx';
 import MerchantHomePage from './pages/MerchantHomePage.jsx';
 import EditAccountPage from './pages/EditAccountPage.jsx';
+import MerchantProductPage from './pages/MerchantProductPage.jsx';
 import './App.css';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/client" element={<ClientHomePage />} />
           <Route path="/merchant" element={<MerchantHomePage />} />
+          <Route path="/merchant/product" element={<MerchantProductPage />} />
           <Route path="/edit-account" element={<EditAccountPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />

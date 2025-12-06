@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './MerchantHomePage.css';
 
 const MerchantHomePage = () => {
+    const navigate = useNavigate();
     const [showUserMenu, setShowUserMenu] = useState(false);
     const [showWalletMenu, setShowWalletMenu] = useState(false);
     const [showShopMenu, setShowShopMenu] = useState(false);
@@ -162,7 +164,7 @@ const MerchantHomePage = () => {
                                             </svg>
                                             Service + / Abonnements
                                         </button>
-                                        <button className="shop-action-btn">
+                                        <button className="shop-action-btn" onClick={() => navigate('/merchant/product')}>
                                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
                                                 <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
                                                 <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
@@ -381,7 +383,7 @@ const MerchantHomePage = () => {
                                                 </span>
                                             </div>
                                         </div>
-                                        <button className="product-button">Gérer le produit</button>
+                                        <button className="product-button" onClick={() => navigate('/merchant/product')}>Gérer le produit</button>
                                     </div>
                                 </div>
                             ))}
