@@ -19,5 +19,6 @@
     </orderEntry>
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot-autoconfigure:3.2.2" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.boot:spring-boot:3.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework.data:spring-data-jpa:3.2.2" level="project" />
   </component>
 </module>
