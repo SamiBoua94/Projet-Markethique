@@ -7,7 +7,7 @@ Ce dépôt contient le code source du projet Markethique, une marketplace éthiq
 Le projet est divisé en deux parties :
 
 - **frontend/** : L'application React (Vite) pour l'interface utilisateur.
-- **backend/** : Le serveur (à venir) pour l'API et la base de données.
+- **backend/** : base de données, langages arrivent
 
 ## Comment lancer le projet
 
