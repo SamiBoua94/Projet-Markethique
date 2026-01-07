@@ -12,6 +12,7 @@ const reviewRoutes = require('./routes/reviews.routes');
 const wishlistRoutes = require('./routes/wishlist.routes');
 const messageRoutes = require('./routes/messages.routes');
 const adminRoutes = require('./routes/admin.routes');
+const sellerRoutes = require('./routes/sellers.routes');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/sellers', sellerRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok' });

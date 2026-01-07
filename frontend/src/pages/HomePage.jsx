@@ -1,8 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
 
   const categories = [
     'Art & Artisanat ', 'Mode & Accessoires', 'Cosmétiques', 'Services'
@@ -197,7 +199,7 @@ const HomePage = () => {
             <h2 className="section-title">Boutiques en vedette</h2>
             <div className="shops-grid">
               {featuredShops.map(shop => (
-                <div key={shop.id} className="shop-card">
+                <div key={shop.id} className="shop-card" onClick={() => navigate(`/shop/${shop.id}`)}>
                   <div className="shop-image">{shop.image}</div>
                   <div className="shop-content">
                     <h3 className="shop-name">{shop.name}</h3>
@@ -209,7 +211,7 @@ const HomePage = () => {
                       </div>
                       <div className="shop-products">{shop.products} produits</div>
                     </div>
-                    <button className="shop-button">Visiter la boutique</button>
+                    <button className="shop-button" onClick={(e) => { e.stopPropagation(); navigate(`/shop/${shop.id}`); }}>Visiter la boutique</button>
                   </div>
                 </div>
               ))}
