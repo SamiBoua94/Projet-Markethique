@@ -1,12 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
 import { categories } from '../data/products';
+import { isAuthenticated, logout, getCurrentUser } from '../../services/authService';
 
 const Header = ({ cartCount, onSearchChange, selectedCategory, onCategoryChange }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [showLangMenu, setShowLangMenu] = useState(false);
     const [currentLang, setCurrentLang] = useState('EN');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [authenticated, setAuthenticated] = useState(isAuthenticated());
+    const navigate = useNavigate();
+    const user = getCurrentUser();
+
+    useEffect(() => {
+        const handleAuthChange = () => {
+            setAuthenticated(isAuthenticated());
+        };
+        
+        window.addEventListener('authChange', handleAuthChange);
+        
+        return () => {
+            window.removeEventListener('authChange', handleAuthChange);
+        };
+    }, []);
+
+    const handleLogout = () => {
+        logout();
+        window.dispatchEvent(new Event('authChange'));
+        navigate('/');
+    };
 
     const languages = [
         { code: 'EN', flag: '🇬🇧' },
@@ -61,7 +84,6 @@ const Header = ({ cartCount, onSearchChange, selectedCategory, onCategoryChange 
                                             e.preventDefault();
                                             setCurrentLang('FR');
                                             setShowLangMenu(false);
-                                            // Ici vous pouvez ajouter la logique pour changer la langue de l'application
                                         }}
                                     >
                                         <span className="lang-flag">🇫🇷</span>
@@ -73,7 +95,6 @@ const Header = ({ cartCount, onSearchChange, selectedCategory, onCategoryChange 
                                             e.preventDefault();
                                             setCurrentLang('EN');
                                             setShowLangMenu(false);
-                                            // Ici vous pouvez ajouter la logique pour changer la langue de l'application
                                         }}
                                     >
                                         <span className="lang-flag">🇬🇧</span>
@@ -115,51 +136,73 @@ const Header = ({ cartCount, onSearchChange, selectedCategory, onCategoryChange 
                     </button>
 
                     <div className="header-actions">
-                        <div className="header-btn-wrapper">
-                            <button className="header-btn">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                                    <circle cx="12" cy="7" r="4" />
+                        <button className="header-action-btn" aria-label="Search">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                <path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </button>
+                        
+                        <Link to="/cart" className="header-action-btn" aria-label="Cart">
+                            <div className="cart-icon">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.3 4.6c-.3.6-.1 1.3.5 1.7.6.4 1.3.4 1.8-.1L12 12m0 0h.01M12 12h.01" />
                                 </svg>
-                                <span className="header-btn-label">Account</span>
-                            </button>
-                            <div className="header-dropdown">
-                                <button className="header-dropdown-item">Sign in</button>
-                                <button className="header-dropdown-item">Sign up</button>
+                                {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
                             </div>
-                        </div>
-                        <button className="header-btn">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                                <circle cx="12" cy="10" r="3" />
-                            </svg>
-                            <span className="header-btn-label">Near Me</span>
-                        </button>
-                        <button className="header-btn">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
-                                <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
-                                <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
-                            </svg>
-                            <span className="header-btn-label">Eco-Wallet</span>
-                        </button>
-                        <button className="header-btn cart-btn">
-                            <div className="cart-icon-wrapper">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                    <circle cx="9" cy="21" r="1" />
-                                    <circle cx="20" cy="21" r="1" />
-                                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                                </svg>
-                                {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+                        </Link>
+                        
+                        {!authenticated ? (
+                            <div className="auth-buttons">
+                                <Link to="/login" className="btn btn-link">Connexion</Link>
+                                <Link to="/register" className="btn btn-primary">S'inscrire</Link>
                             </div>
-                            <span className="header-btn-label">Cart</span>
-                        </button>
-                        <button className="header-btn">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
-                            </svg>
-                            <span className="header-btn-label">Favorites</span>
-                        </button>
+                        ) : (
+                            <div className="user-menu-container">
+                                <button 
+                                    className="header-action-btn user-avatar" 
+                                    onClick={() => setShowUserMenu(!showUserMenu)}
+                                    aria-label="User menu"
+                                >
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>
+                                </button>
+                                
+                                {showUserMenu && (
+                                    <div className="user-dropdown">
+                                        <div className="user-info">
+                                            <p className="user-name">{user?.username || 'Utilisateur'}</p>
+                                            <p className="user-email">{user?.email || ''}</p>
+                                        </div>
+                                        <div className="dropdown-divider"></div>
+                                        <Link 
+                                            to="/profile" 
+                                            className="dropdown-item"
+                                            onClick={() => setShowUserMenu(false)}
+                                        >
+                                            Mon profil
+                                        </Link>
+                                        {user?.userType === 'seller' && (
+                                            <Link 
+                                                to="/seller/dashboard" 
+                                                className="dropdown-item"
+                                                onClick={() => setShowUserMenu(false)}
+                                            >
+                                                Tableau de bord vendeur
+                                            </Link>
+                                        )}
+                                        <div className="dropdown-divider"></div>
+                                        <button 
+                                            className="dropdown-item logout-btn"
+                                            onClick={handleLogout}
+                                        >
+                                            Déconnexion
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                        )}
                     </div>
                 </div>
             </header>
